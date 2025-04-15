@@ -8,148 +8,139 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Changed font */
-            max-width: 600px;
-            margin: 30px auto; /* Added margin top/bottom */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 30px auto;
             padding: 20px;
-            /* Added Gradient Background */
             background: linear-gradient(135deg, #ece9e6 0%, #ffffff 100%);
-            color: #333; /* Darker text color */
+            color: #333;
         }
 
         .container {
-            background-color: #fff; /* White background for contrast */
-            padding: 30px; /* Increased padding */
-            border-radius: 10px; /* Smoother corners */
-            /* Added Box Shadow */
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            border: none; /* Removed default border */
+            border: none;
         }
 
         h2 {
             text-align: center;
-            color: #4CAF50; /* Green title */
+            color: #4CAF50;
             margin-bottom: 25px;
         }
 
         label {
             display: block;
-            margin: 15px 0 5px; /* Adjusted margin */
-            font-weight: 600; /* Bolder labels */
+            margin: 15px 0 5px;
+            font-weight: 600;
             color: #555;
         }
 
-        label i { /* Style for icons next to labels */
+        label i {
             margin-right: 8px;
-            color: #4CAF50; /* Icon color */
-            width: 20px; /* Fixed width for alignment */
+            color: #4CAF50;
+            width: 20px;
             text-align: center;
         }
 
         input, select {
             width: 100%;
-            padding: 12px; /* Increased padding */
-            margin-bottom: 15px; /* Adjusted margin */
+            padding: 12px;
+            margin-bottom: 15px;
             border: 1px solid #ccc;
-            border-radius: 5px; /* Smoother corners */
-            box-sizing: border-box; /* Include padding in width */
-            /* Added Transition for focus effect */
+            border-radius: 5px;
+            box-sizing: border-box;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            /* Added Subtle Shadow */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
-        /* Focus Effect */
         input:focus, select:focus {
             border-color: #4CAF50;
             box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
-            outline: none; /* Remove default outline */
+            outline: none;
         }
 
-        /* Readonly input styling */
         input[readonly] {
             background-color: #f2f2f2;
             cursor: not-allowed;
             box-shadow: none;
         }
 
+        input[type="date"] {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         button {
-            padding: 12px 25px; /* Adjusted padding */
+            padding: 12px 25px;
             background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 16px; /* Slightly larger font */
+            font-size: 16px;
             font-weight: bold;
-            width: 100%; /* Full width button */
-            margin-top: 10px; /* Added margin top */
-            /* Added Transition and Shadow */
+            width: 100%;
+            margin-top: 10px;
             transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
             box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
         }
 
         button:hover {
             background-color: #45a049;
-            /* Added Hover Effect */
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
         }
 
-        button i { /* Style for icon inside button */
+        button i {
             margin-right: 8px;
         }
 
-
         #result {
-            margin-top: 30px; /* Increased spacing */
+            margin-top: 30px;
         }
 
         .result-section {
-            padding: 15px; /* Adjusted padding */
-            border: 1px solid #e0e0e0; /* Lighter border */
-            border-radius: 8px; /* Smoother corners */
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
             margin-bottom: 15px;
-            background-color: #f9f9f9; /* Light background */
-            /* Added subtle shadow */
+            background-color: #f9f9f9;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
         }
 
         .result-section h3 {
-             margin-top: 0;
-             color: #4CAF50;
-             border-bottom: 1px solid #eee;
-             padding-bottom: 10px;
-             margin-bottom: 15px;
+            margin-top: 0;
+            color: #4CAF50;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
         }
 
-         .result-section p {
-            margin: 8px 0; /* Spacing between lines */
-            line-height: 1.6; /* Improved readability */
-         }
+        .result-section p {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
 
         .result-section strong {
             color: #333;
         }
 
-
         .copy-btn {
-            padding: 6px 12px; /* Adjusted padding */
+            padding: 6px 12px;
             background-color: #008CBA;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             margin-top: 10px;
-            font-size: 12px; /* Smaller font size */
-            float: right; /* Align to the right */
-             /* Added Transition */
+            font-size: 12px;
+            float: right;
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         .copy-btn:hover {
             background-color: #007bb5;
-             /* Added Hover Effect */
             transform: translateY(-1px);
         }
     </style>
@@ -158,8 +149,14 @@
     <div class="container">
         <h2><i class="fa-solid fa-calculator"></i> Tính Toán Lãi Suất</h2>
         <form id="loanForm">
+            <label for="borrowerName"><i class="fa-solid fa-user"></i>Tên người vay:</label>
+            <input type="text" id="borrowerName" required>
+
+            <label for="loanDate"><i class="fa-solid fa-calendar"></i>Ngày vay:</label>
+            <input type="date" id="loanDate" required>
+
             <label for="principal"><i class="fa-solid fa-dollar-sign"></i>Tiền gốc (VNĐ):</label>
-            <select id="principal" onchange="updateOptions()">
+            <select id="principal">
                 <option value="">Chọn số tiền gốc</option>
                 <option value="3000000">3,000,000</option>
                 <option value="4000000">4,000,000</option>
@@ -177,26 +174,24 @@
             </select>
 
             <label for="option"><i class="fa-solid fa-list-check"></i>Tùy chọn góp:</label>
-            <select id="option" onchange="updateFields()">
+            <select id="option">
                 <option value="">Chọn tùy chọn</option>
             </select>
 
             <label for="dailyPayment"><i class="fa-solid fa-money-bill-wave"></i>Số tiền góp mỗi ngày (VNĐ):</label>
-            <input type="text" id="dailyPayment" readonly> <!-- Changed type to text for formatted display -->
+            <input type="text" id="dailyPayment" readonly>
 
             <label for="totalDays"><i class="fa-solid fa-calendar-day"></i>Tổng số ngày góp:</label>
             <input type="number" id="totalDays" readonly>
 
             <label for="prepaidDays"><i class="fa-solid fa-calendar-check"></i>Số ngày đóng trước:</label>
-            <input type="number" id="prepaidDays" value="0" required min="0"> <!-- Added min="0" -->
-
-            <button type="submit"><i class="fa-solid fa-calculator"></i>Tính toán</button>
+            <input type="number" id="prepaidDays" value="0" required min="0">
         </form>
         <div id="result"></div>
     </div>
 
     <script>
-        // Hàm làm tròn (giữ nguyên)
+        // Hàm làm tròn
         function roundPayment(amount) {
             if (amount < 100000) {
                 return Math.round(amount / 5000) * 5000;
@@ -207,7 +202,7 @@
             }
         }
 
-        // Dữ liệu khoản vay (giữ nguyên)
+        // Dữ liệu khoản vay
         const loanData = {
             3000000: [ { dailyPayment: 138000, totalDays: 28 }, { dailyPayment: 111000, totalDays: 35 }, { dailyPayment: 92000, totalDays: 42 }, { dailyPayment: 79000, totalDays: 49 } ],
             4000000: [ { dailyPayment: 185000, totalDays: 28 }, { dailyPayment: 148000, totalDays: 35 }, { dailyPayment: 123000, totalDays: 42 }, { dailyPayment: 106000, totalDays: 49 } ],
@@ -224,8 +219,37 @@
             15000000: [ { dailyPayment: 691000, totalDays: 28 }, { dailyPayment: 555000, totalDays: 35 }, { dailyPayment: 460000, totalDays: 42 }, { dailyPayment: 395000, totalDays: 49 } ]
         };
 
-         // Hàm định dạng số tiền
+        // Hàm định dạng số tiền
         const formatVND = (num) => num.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+
+        // Hàm định dạng ngày tháng
+        const timezone = 'Asia/Ho_Chi_Minh';
+        function formatDate(date) {
+            return date.toLocaleDateString('vi-VN', { timeZone: timezone });
+        }
+
+        // Hàm tính ngày đến hạn
+        function calculateDueDateObject(startDate, days) {
+            const dueDate = new Date(startDate);
+            dueDate.setDate(startDate.getDate() + days);
+            return dueDate;
+        }
+
+        // Hàm sao chép nội dung
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const textToCopy = element.textContent || element.innerText;
+            const lines = textToCopy.split('\n');
+            const filteredLines = lines.filter(line => !line.trim().endsWith('Copy') && line.trim() !== '');
+            const cleanedText = filteredLines.join('\n').trim();
+
+            navigator.clipboard.writeText(cleanedText).then(() => {
+                alert('Đã sao chép nội dung!');
+            }).catch(err => {
+                console.error('Lỗi khi sao chép: ', err);
+                alert('Không thể sao chép nội dung.');
+            });
+        }
 
         // Hàm cập nhật tùy chọn khi chọn số tiền gốc
         function updateOptions() {
@@ -233,18 +257,15 @@
             const optionSelect = document.getElementById('option');
             const dailyPaymentInput = document.getElementById('dailyPayment');
             const totalDaysInput = document.getElementById('totalDays');
-
-            // Xóa các tùy chọn cũ
             optionSelect.innerHTML = '<option value="">Chọn tùy chọn</option>';
             dailyPaymentInput.value = '';
             totalDaysInput.value = '';
-            document.getElementById('result').innerHTML = ''; // Clear result on principal change
+            calculateLoan(); // Tự động tính toán sau khi thay đổi
 
             if (principal && loanData[principal]) {
                 loanData[principal].forEach((option, index) => {
                     const optionElement = document.createElement('option');
                     optionElement.value = index;
-                    // Format tiền tệ trong text của option
                     optionElement.text = `${formatVND(option.dailyPayment).replace(/\s/g, '')}/ngày - ${option.totalDays} ngày`;
                     optionSelect.appendChild(optionElement);
                 });
@@ -257,174 +278,99 @@
             const optionIndex = parseInt(document.getElementById('option').value);
             const dailyPaymentInput = document.getElementById('dailyPayment');
             const totalDaysInput = document.getElementById('totalDays');
-             document.getElementById('result').innerHTML = ''; // Clear result on option change
-
 
             if (principal && !isNaN(optionIndex) && loanData[principal][optionIndex]) {
                 const selectedOption = loanData[principal][optionIndex];
-                // Hiển thị số tiền đã định dạng trong input readonly
                 dailyPaymentInput.value = formatVND(selectedOption.dailyPayment);
                 totalDaysInput.value = selectedOption.totalDays;
             } else {
                 dailyPaymentInput.value = '';
                 totalDaysInput.value = '';
             }
+            calculateLoan(); // Tự động tính toán sau khi thay đổi
         }
 
-        // ---- TỐI ƯU HÀM TÍNH NGÀY ----
-        const timezone = 'Asia/Ho_Chi_Minh'; // Định nghĩa múi giờ
-
-        // Hàm định dạng ngày tháng (sử dụng múi giờ cố định)
-        function formatDate(date) {
-             // Sử dụng toLocaleDateString để định dạng và đảm bảo múi giờ
-            return date.toLocaleDateString('vi-VN', { timeZone: timezone });
-        }
-
-        // Hàm tính ngày kết thúc (trả về chuỗi đã định dạng với múi giờ)
-        function calculateEndDateString(startDate, totalDays) {
-            const date = new Date(startDate);
-            date.setDate(date.getDate() + totalDays);
-            // Trả về chuỗi ngày đã định dạng với múi giờ cố định
-            return formatDate(date);
-        }
-
-        // Hàm tính ngày đến hạn (trả về đối tượng Date)
-        // Hàm này không thay đổi vì nó trả về Date object, việc định dạng sẽ do hàm formatDate xử lý sau
-        function calculateDueDateObject(startDate, days) {
-            const dueDate = new Date(startDate);
-            dueDate.setDate(startDate.getDate() + days);
-            return dueDate;
-        }
-        // ---- KẾT THÚC TỐI ƯU HÀM TÍNH NGÀY ----
-
-
-        // Hàm displayLoanOptions (tùy chọn, có thể bỏ nếu không dùng)
-        function displayLoanOptions(loanAmount, startDate = new Date()) {
-            const options = loanData[loanAmount];
-            if (!options) {
-                return "Số tiền vay không hợp lệ.";
-            }
-
-            let result = `Các tùy chọn trả góp cho khoản vay ${formatVND(loanAmount)}:\n`;
-            options.forEach((option, index) => {
-                const totalPayment = option.dailyPayment * option.totalDays;
-                const interest = totalPayment - loanAmount;
-                const interestRate = (interest / loanAmount) * 100;
-                // Sử dụng hàm đã tối ưu
-                const endDate = calculateEndDateString(startDate, option.totalDays);
-
-                result += `Tùy chọn ${index + 1}:\n`;
-                result += `- Số tiền góp mỗi ngày: ${formatVND(option.dailyPayment)}\n`;
-                result += `- Số ngày góp: ${option.totalDays} ngày\n`;
-                result += `- Tổng tiền phải trả: ${formatVND(totalPayment)}\n`;
-                result += `- Tiền lãi: ${formatVND(interest)}\n`;
-                result += `- Lãi suất: ${interestRate.toFixed(2)}%\n`;
-                result += `- Ngày đóng cuối cùng (dự kiến): ${endDate}\n\n`;
-            });
-            return result;
-        }
-        // Ví dụ: Hiển thị cho khoản vay 5,000,000 VNĐ trong console khi tải trang
-        // console.log(displayLoanOptions(5000000));
-
-
-        // Hàm sao chép nội dung
-        function copyToClipboard(elementId) {
-            const element = document.getElementById(elementId);
-            // Lấy text content thay vì innerText để bao gồm cả các dòng mới tiềm năng
-            const textToCopy = element.textContent || element.innerText;
-
-            // Loại bỏ nút "Copy" khỏi nội dung sao chép
-             const lines = textToCopy.split('\n');
-             const filteredLines = lines.filter(line => !line.trim().endsWith('Copy') && line.trim() !== '');
-             const cleanedText = filteredLines.join('\n').trim(); // Nối lại và loại bỏ khoảng trắng thừa
-
-
-            navigator.clipboard.writeText(cleanedText).then(() => {
-                // Có thể thay alert bằng thông báo tinh tế hơn
-                 alert('Đã sao chép nội dung!');
-            }).catch(err => {
-                console.error('Lỗi khi sao chép: ', err);
-                alert('Không thể sao chép nội dung.');
-            });
-        }
-
-        // Xử lý form khi submit
-        document.getElementById('loanForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            // Lấy giá trị từ form
+        // Hàm tính toán và hiển thị kết quả
+        function calculateLoan() {
+            const borrowerName = document.getElementById('borrowerName').value;
+            const loanDateStr = document.getElementById('loanDate').value;
             const principal = parseFloat(document.getElementById('principal').value);
-            const optionIndex = parseInt(document.getElementById('option').value); // Lấy index của option đã chọn
+            const optionIndex = parseInt(document.getElementById('option').value);
             const prepaidDays = parseInt(document.getElementById('prepaidDays').value);
             const resultDiv = document.getElementById('result');
 
-            // Kiểm tra xem đã chọn option chưa
-            if (isNaN(principal) || isNaN(optionIndex) || optionIndex < 0) {
-                 resultDiv.innerHTML = '<p style="color: red;">Vui lòng chọn số tiền gốc và một tùy chọn góp hợp lệ.</p>';
-                 return;
+            // Kiểm tra dữ liệu hợp lệ
+            if (!borrowerName || !loanDateStr || isNaN(principal) || isNaN(optionIndex) || optionIndex < 0 || isNaN(prepaidDays) || prepaidDays < 0) {
+                resultDiv.innerHTML = '';
+                return;
             }
 
-            // Lấy thông tin từ loanData dựa trên principal và optionIndex
             const selectedOption = loanData[principal][optionIndex];
             const dailyPayment = selectedOption.dailyPayment;
             const totalDays = selectedOption.totalDays;
 
-            // Kiểm tra dữ liệu hợp lệ khác
-             if (isNaN(prepaidDays) || prepaidDays < 0) {
-                 resultDiv.innerHTML = '<p style="color: red;">Số ngày đóng trước phải là một số không âm.</p>';
-                 return;
-             }
-             if (prepaidDays > totalDays) {
-                 resultDiv.innerHTML = `<p style="color: red;">Số ngày đóng trước (${prepaidDays}) không được lớn hơn tổng số ngày góp (${totalDays}).</p>`;
-                 return;
-             }
+            if (prepaidDays > totalDays) {
+                resultDiv.innerHTML = `<p style="color: red;">Số ngày đóng trước (${prepaidDays}) không được lớn hơn tổng số ngày góp (${totalDays}).</p>`;
+                return;
+            }
 
             // Tính toán
-            const totalPayment = dailyPayment * totalDays; // Tổng tiền cả gốc lẫn lãi
-            const interest = totalPayment - principal; // Tiền lãi
-            const interestRate = (interest / principal) * 100; // Phần trăm lãi
-            const prepaidAmount = dailyPayment * prepaidDays; // Số tiền đóng trước
-            const remainingDays = totalDays - prepaidDays; // Số ngày còn lại
-            const remainingAmount = dailyPayment * remainingDays; // Số tiền còn lại
-            const transferAmount = principal - prepaidAmount; // Số tiền cần chuyển
+            const totalPayment = dailyPayment * totalDays;
+            const interest = totalPayment - principal;
+            const interestRate = (interest / principal) * 100;
+            const prepaidAmount = dailyPayment * prepaidDays;
+            const remainingDays = totalDays - prepaidDays;
+            const remainingAmount = dailyPayment * remainingDays;
+            const transferAmount = principal - prepaidAmount;
 
-            // Lấy ngày hiện tại (theo thời gian thực) và định dạng
-            const currentDate = new Date();
-            const startDateFormatted = formatDate(currentDate); // Sử dụng hàm đã tối ưu
-
-            // Tính ngày phải đóng sau chu kỳ đóng trước và định dạng
-            const dueDateObject = calculateDueDateObject(currentDate, prepaidDays); // Lấy Date object
-            const dueDateFormatted = formatDate(dueDateObject); // Định dạng bằng hàm đã tối ưu
+            // Xử lý ngày
+            const loanDate = new Date(loanDateStr);
+            const loanDateFormatted = formatDate(loanDate);
+            const dueDateObject = calculateDueDateObject(loanDate, prepaidDays);
+            const dueDateFormatted = formatDate(dueDateObject);
+            const maturityDateObject = calculateDueDateObject(loanDate, totalDays);
+            const maturityDateFormatted = formatDate(maturityDateObject);
 
             // Hiển thị kết quả
             resultDiv.innerHTML = `
-                <h3>Kết quả tính toán:</h3>
+                <h3>Người vay:</h3>
                 <div class="result-section" id="input-section">
-                     <button class="copy-btn" onclick="copyToClipboard('input-section')">Copy</button>
-                     <p><strong>Tiền gốc:</strong> ${formatVND(principal)}</p>
-                     <p><strong>Gói đã chọn:</strong> ${formatVND(dailyPayment).replace(/\s/g, '')}/ngày - ${totalDays} ngày</p>
-                     <p><strong>Số tiền đóng trước (${prepaidDays} ngày):</strong> ${formatVND(prepaidAmount)}</p>
-                     <p><strong>Số tiền cần chuyển khoản:</strong> ${formatVND(transferAmount)}</p>
-                     <p><strong>Ngày vay:</strong> ${startDateFormatted}</p>
-                     <p><strong>Ngày đóng tiếp theo:</strong> ${dueDateFormatted}</p>
-                     <p><strong>Số ngày còn lại phải đóng:</strong> ${remainingDays} ngày</p>
-                     <p><strong>Số tiền còn lại phải đóng:</strong> ${formatVND(remainingAmount)}</p>
+                    <p><strong>Tên người vay:</strong> ${borrowerName}</p>
+                    <p><strong>Ngày vay:</strong> ${loanDateFormatted}</p>
+                    <p><strong>Tiền gốc:</strong> ${formatVND(principal)}</p>
+                    <p><strong>Gói đã chọn:</strong> ${formatVND(dailyPayment).replace(/\s/g, '')}/ngày - ${totalDays} ngày</p>
+                    <p><strong>Số tiền đóng trước (${prepaidDays} ngày):</strong> ${formatVND(prepaidAmount)}</p>
+                    <p><strong>Số tiền cần chuyển khoản:</strong> ${formatVND(transferAmount)}</p>
+                    <p><strong>Ngày đóng tiếp theo:</strong> ${dueDateFormatted}</p>
+                    <p><strong>Ngày đáo hạn:</strong> ${maturityDateFormatted}</p>
+                    <p><strong>Số ngày còn lại phải đóng:</strong> ${remainingDays} ngày</p>
+                    <p><strong>Số tiền còn lại phải đóng:</strong> ${formatVND(remainingAmount)}</p>
+                    <button class="copy-btn" onclick="copyToClipboard('input-section')">Copy</button>
                 </div>
-
+                   <h3>Người cho vay:</h3>
                 <div class="result-section" id="output-section">
-                     <button class="copy-btn" onclick="copyToClipboard('output-section')">Copy</button>
-                     <p><strong>Số ngày đóng trước:</strong> ${prepaidDays} ngày</p>
-                     <p><strong>Tổng tiền phải trả (Gốc + Lãi):</strong> ${formatVND(totalPayment)}</p>
-                     <p><strong>Tiền lãi:</strong> ${formatVND(interest)}</p>
-                     <p><strong>Lãi suất:</strong> ${interestRate.toFixed(2)}%</p>
-                     
+                    <p><strong>Số ngày đóng trước:</strong> ${prepaidDays} ngày</p>
+                    <p><strong>Tổng tiền phải trả (Gốc + Lãi):</strong> ${formatVND(totalPayment)}</p>
+                    <p><strong>Tiền lãi:</strong> ${formatVND(interest)}</p>
+                    <p><strong>Lãi suất:</strong> ${interestRate.toFixed(2)}%</p>
+                    <button class="copy-btn" onclick="copyToClipboard('output-section')">Copy</button>
                 </div>
             `;
+        }
+
+        // Thiết lập ngày mặc định cho input ngày vay
+        document.addEventListener('DOMContentLoaded', () => {
+            const loanDateInput = document.getElementById('loanDate');
+            const today = new Date();
+            loanDateInput.value = today.toISOString().split('T')[0];
+
+            // Thêm sự kiện input cho các trường
+            document.getElementById('borrowerName').addEventListener('input', calculateLoan);
+            document.getElementById('loanDate').addEventListener('input', calculateLoan);
+            document.getElementById('principal').addEventListener('change', updateOptions);
+            document.getElementById('option').addEventListener('change', updateFields);
+            document.getElementById('prepaidDays').addEventListener('input', calculateLoan);
         });
-
-        // Khởi tạo các tùy chọn khi tải trang (nếu có giá trị principal mặc định)
-        updateOptions(); // Bỏ dòng này nếu không muốn tự động chọn khi tải
-
     </script>
 </body>
 </html>
