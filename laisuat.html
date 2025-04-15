@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính Toán Lãi Suất</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+        }
+        .result-section {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .copy-btn {
+            padding: 5px 10px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .copy-btn:hover {
+            background-color: #007bb5;
+        }
+        input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Tính Toán Lãi Suất</h2>
+        <form id="loanForm">
+                <label for="borrowerName">Tên người vay:</label>
+    <input type="text" id="borrowerName" required>
+    <label for="loanDate">Ngày vay:</label>
+    <input type="date" id="loanDate" required>
+
+            <label for="principal">Tiền gốc (VNĐ):</label>
+            <select id="principal" onchange="updateOptions()">
+                <option value="">Chọn số tiền gốc</option>
+                <option value="3000000">3,000,000</option>
+                <option value="4000000">4,000,000</option>
+                <option value="5000000">5,000,000</option>
+                <option value="6000000">6,000,000</option>
+                <option value="7000000">7,000,000</option>
+                <option value="8000000">8,000,000</option>
+                <option value="9000000">9,000,000</option>
+                <option value="10000000">10,000,000</option>
+                <option value="11000000">11,000,000</option>
+                <option value="12000000">12,000,000</option>
+                <option value="13000000">13,000,000</option>
+                <option value="14000000">14,000,000</option>
+                <option value="15000000">15,000,000</option>
+            </select>
+
+            <label for="option">Tùy chọn góp:</label>
+            <select id="option" onchange="updateFields()">
+                <option value="">Chọn tùy chọn</option>
+            </select>
+
+            <label for="dailyPayment">Số tiền góp mỗi ngày (VNĐ):</label>
+            <input type="number" id="dailyPayment" readonly>
+
+            <label for="totalDays">Tổng số ngày góp:</label>
+            <input type="number" id="totalDays" readonly>
+
+            <label for="prepaidDays">Số ngày đóng trước:</label>
+            <input type="number" id="prepaidDays" required>
+
+            <button type="submit">Tính toán</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Dữ liệu từ bảng
+        const loanData = {
+            3000000: [
+                { dailyPayment: 100000, totalDays: 38 },
+                { dailyPayment: 105000, totalDays: 37 },
+                { dailyPayment: 150000, totalDays: 26 }
+            ],
+            4000000: [
+                { dailyPayment: 150000, totalDays: 35 },
+                { dailyPayment: 200000, totalDays: 26 }
+            ],
+            5000000: [
+                { dailyPayment: 150000, totalDays: 44 },
+                { dailyPayment: 200000, totalDays: 32 }
+            ],
+            6000000: [
+                { dailyPayment: 155000, totalDays: 50 },
+                { dailyPayment: 200000, totalDays: 38 }
+            ],
+            7000000: [
+                { dailyPayment: 185000, totalDays: 50 },
+                { dailyPayment: 200000, totalDays: 45 }
+            ],
+            8000000: [
+                { dailyPayment: 205000, totalDays: 50 },
+                { dailyPayment: 300000, totalDays: 34 }
+            ],
+            9000000: [
+                { dailyPayment: 240000, totalDays: 50 },
+                { dailyPayment: 300000, totalDays: 39 }
+            ],
+            10000000: [
+                { dailyPayment: 255000, totalDays: 50 },
+                { dailyPayment: 400000, totalDays: 41 }
+            ],
+            11000000: [
+                { dailyPayment: 280000, totalDays: 50 },
+                { dailyPayment: 400000, totalDays: 35 }
+            ],
+            12000000: [
+                { dailyPayment: 305000, totalDays: 50 },
+                { dailyPayment: 400000, totalDays: 37 }
+            ],
+            13000000: [
+                { dailyPayment: 330000, totalDays: 50 },
+                { dailyPayment: 415000, totalDays: 40 }
+            ],
+            14000000: [
+                { dailyPayment: 355000, totalDays: 50 },
+                { dailyPayment: 445000, totalDays: 40 }
+            ],
+            15000000: [
+                { dailyPayment: 385000, totalDays: 50 },
+                { dailyPayment: 480000, totalDays: 40 }
+            ]
+        };
+
+        // Hàm cập nhật tùy chọn khi chọn số tiền gốc
+        // Hàm cập nhật tùy chọn khi chọn số tiền gốc
+function updateOptions() {
+    const principal = parseFloat(document.getElementById('principal').value);
+    const optionSelect = document.getElementById('option');
+    const dailyPaymentInput = document.getElementById('dailyPayment');
+    const totalDaysInput = document.getElementById('totalDays');
+
+    optionSelect.innerHTML = '<option value="">Chọn tùy chọn</option>';
+    dailyPaymentInput.value = '';
+    totalDaysInput.value = '';
+
+    if (principal && loanData[principal]) {
+        loanData[principal].forEach((option, index) => {
+            const optionElement = document.createElement('option');
+            optionElement.value = index;
+            optionElement.text = `${option.dailyPayment.toLocaleString('vi-VN')} VNĐ/ngày - ${option.totalDays} ngày`;
+            optionSelect.appendChild(optionElement);
+        });
+    }
+}
+
+// Hàm cập nhật các trường khi chọn tùy chọn
+function updateFields() {
+    const principal = parseFloat(document.getElementById('principal').value);
+    const optionIndex = parseInt(document.getElementById('option').value);
+    const dailyPaymentInput = document.getElementById('dailyPayment');
+    const totalDaysInput = document.getElementById('totalDays');
+
+    if (principal && !isNaN(optionIndex) && loanData[principal][optionIndex]) {
+        dailyPaymentInput.value = loanData[principal][optionIndex].dailyPayment;
+        totalDaysInput.value = loanData[principal][optionIndex].totalDays;
+    } else {
+        dailyPaymentInput.value = '';
+        totalDaysInput.value = '';
+    }
+}
+
+// Hàm định dạng ngày tháng
+function formatDate(date) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+
+// Hàm tính ngày phải đóng
+function calculateDueDate(startDate, days) {
+    const dueDate = new Date(startDate);
+    dueDate.setDate(startDate.getDate() + days);
+    return dueDate;
+}
+
+// Hàm sao chép nội dung
+function copyToClipboard(elementId) {
+    const element = document.getElementById(elementId);
+    const text = element.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        alert('Đã sao chép nội dung!');
+    }).catch(err => {
+        console.error('Lỗi khi sao chép: ', err);
+    });
+}
+
+// Thiết lập ngày mặc định cho input ngày vay
+document.addEventListener('DOMContentLoaded', () => {
+    const loanDateInput = document.getElementById('loanDate');
+    const today = new Date();
+    loanDateInput.value = today.toISOString().split('T')[0]; // Định dạng YYYY-MM-DD
+});
+
+// Xử lý form khi submit
+document.getElementById('loanForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Lấy giá trị từ form
+    const borrowerName = document.getElementById('borrowerName').value;
+    const loanDateStr = document.getElementById('loanDate').value;
+    const principal = parseFloat(document.getElementById('principal').value);
+    const dailyPayment = parseFloat(document.getElementById('dailyPayment').value);
+    const totalDays = parseInt(document.getElementById('totalDays').value);
+    const prepaidDays = parseInt(document.getElementById('prepaidDays').value);
+
+    // Kiểm tra dữ liệu hợp lệ
+    if (!borrowerName || !loanDateStr || isNaN(principal) || isNaN(dailyPayment) || isNaN(totalDays) || isNaN(prepaidDays)) {
+        document.getElementById('result').innerHTML = '<p style="color: red;">Vui lòng nhập đầy đủ các giá trị.</p>';
+        return;
+    }
+    if (prepaidDays > totalDays) {
+        document.getElementById('result').innerHTML = '<p style="color: red;">Số ngày đóng trước không được lớn hơn tổng số ngày góp.</p>';
+        return;
+    }
+
+    // Chuyển đổi ngày vay thành đối tượng Date
+    const loanDate = new Date(loanDateStr);
+
+    // Tính toán
+    const totalPayment = dailyPayment * totalDays;
+    const interest = totalPayment - principal;
+    const interestRate = (interest / principal) * 100;
+    const prepaidAmount = dailyPayment * prepaidDays;
+    const remainingDays = totalDays - prepaidDays;
+    const remainingAmount = dailyPayment * remainingDays;
+    const transferAmount = principal - prepaidAmount;
+
+    // Tính các ngày
+    const loanDateFormatted = formatDate(loanDate);
+    const dueDate = calculateDueDate(loanDate, prepaidDays); // Ngày đóng tiếp theo
+    const dueDateFormatted = formatDate(dueDate);
+    const maturityDate = calculateDueDate(loanDate, totalDays); // Ngày đáo hạn
+    const maturityDateFormatted = formatDate(maturityDate);
+
+    // Định dạng số tiền
+    const formatNumber = (num) => num.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+
+    // Hiển thị kết quả
+    document.getElementById('result').innerHTML = `
+        <h3>Kết quả:</h3>
+        <div class="result-section" id="input-section">
+            <p><strong>Tên người vay:</strong> ${borrowerName}</p>
+            <p><strong>Ngày vay:</strong> ${loanDateFormatted}</p>
+            <p><strong>Tiền gốc:</strong> ${formatNumber(principal)}</p>
+            <p><strong>Số tiền góp mỗi ngày (VNĐ):</strong> ${formatNumber(dailyPayment)}</p>
+            <p><strong>Tổng số ngày góp:</strong> ${totalDays} ngày</p>
+            <p><strong>Số ngày đóng trước:</strong> ${prepaidDays} ngày</p>
+            <p><strong>Số tiền đóng trước (${prepaidDays} ngày):</strong> ${formatNumber(prepaidAmount)}</p>
+            <p><strong>Ngày đóng tiếp theo:</strong> ${dueDateFormatted}</p>
+            <p><strong>Ngày đáo hạn:</strong> ${maturityDateFormatted}</p>
+            <p><strong>Số ngày còn lại:</strong> ${remainingDays} ngày</p>
+            <p><strong>Số tiền còn lại phải đóng:</strong> ${formatNumber(remainingAmount)}</p>
+            <button class="copy-btn" onclick="copyToClipboard('input-section')">Copy</button>
+        </div>
+        <div class="result-section" id="output-section">
+            <p><strong>Tổng tiền cả gốc lẫn lãi:</strong> ${formatNumber(totalPayment)}</p>
+            <p><strong>Tiền lãi:</strong> ${formatNumber(interest)}</p>
+            <p><strong>Phần trăm lãi:</strong> ${interestRate.toFixed(2)}%</p>
+            <p><strong>Số tiền cần chuyển:</strong> ${formatNumber(transferAmount)}</p>
+            <button class="copy-btn" onclick="copyToClipboard('output-section')">Copy</button>
+        </div>
+    `;
+});
+    </script>
+</body>
+</html>
