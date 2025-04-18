@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính Toán Lãi Suất</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 10px;
+            background: linear-gradient(135deg, #ece9e6 0%, #ffffff 100%);
+            color: #333;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+
+        h2 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        label i {
+            margin-right: 8px;
+            color: #4CAF50;
+            width: 20px;
+            text-align: center;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        input:focus, select:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+            outline: none;
+        }
+
+        input[readonly] {
+            background-color: #f2f2f2;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        input[type="date"] {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        button i {
+            margin-right: 8px;
+        }
+
+        #result {
+            margin-top: 30px;
+        }
+
+        .result-section {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background-color: #f9f9f9;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .result-section h3 {
+            margin-top: 0;
+            color: #4CAF50;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .result-section p {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .result-section strong {
+            color: #333;
+        }
+
+        .copy-btn {
+            padding: 6px 12px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 12px;
+            float: right;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background-color: #007bb5;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h2><i class="fa-solid fa-calculator"></i> Tính Toán Lãi Suất</h2>
+    <form id="loanForm">
+        <label for="borrowerName"><i class="fa-solid fa-user"></i>Tên người vay:</label>
+        <input type="text" id="borrowerName" required>
+
+        <label for="loanDate"><i class="fa-solid fa-calendar"></i>Ngày vay:</label>
+        <input type="date" id="loanDate" required>
+
+        <label for="principal"><i class="fa-solid fa-dollar-sign"></i>Tiền gốc (VNĐ):</label>
+        <input type="text" id="principal" placeholder="Nhập số tiền gốc (tối đa 20,000,000)" required pattern="[0-9,.]+">
+
+        <label for="option"><i class="fa-solid fa-list-check"></i>Tùy chọn góp:</label>
+        <select id="option">
+            <option value="">Chọn tùy chọn</option>
+        </select>
+
+        <label for="dailyPayment"><i class="fa-solid fa-money-bill-wave"></i>Số tiền góp mỗi ngày (VNĐ):</label>
+        <input type="text" id="dailyPayment" readonly>
+
+        <label for="totalDays"><i class="fa-solid fa-calendar-day"></i>Tổng số ngày góp:</label>
+        <input type="number" id="totalDays" readonly>
+
+        <label for="prepaidDays"><i class="fa-solid fa-calendar-check"></i>Số ngày đóng trước:</label>
+        <input type="number" id="prepaidDays" value="0" required min="0">
+    </form>
+    <div id="result"></div>
+</div>
+    <script>
+   // Hàm làm tròn
+function roundPayment(amount) {
+    return Math.round(amount / 1000) * 1000; // Làm tròn đến 1,000 VNĐ
+}
+
+// Hàm định dạng số tiền với dấu phẩy
+function formatNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+// Hàm chuyển đổi giá trị nhập thành số tiền thực tế
+function parseSmartInput(value) {
+    if (!value) return NaN;
+    // Xóa dấu phẩy và khoảng trắng
+    let cleanValue = value.replace(/[,]/g, '');
+    // Nếu giá trị chưa hoàn chỉnh (kết thúc bằng dấu chấm), không xử lý
+    if (cleanValue.endsWith('.')) return NaN;
+
+    // Chuyển thành số
+    let num = parseFloat(cleanValue);
+    if (isNaN(num)) return NaN;
+
+    // Xử lý nhập thông minh
+    if (cleanValue.includes('.') || num < 100) {
+        // Nếu có dấu chấm hoặc giá trị nhỏ (ví dụ: 1.5 hoặc 2), hiểu là hàng triệu
+        num = num * 1000000;
+    } else {
+        // Nếu là số đầy đủ (ví dụ: 1500000), giữ nguyên
+        num = num;
+    }
+
+    // Giới hạn tối thiểu và tối đa
+    if (num < 1000000) num = 1000000;
+    if (num > 20000000) num = 20000000;
+
+    return num;
+}
+
+// Hàm tạo tùy chọn thanh toán dựa trên số tiền gốc
+function generateLoanOptions(principal) {
+    const daysOptions = [28, 35, 42, 49];
+    const baseInterestRate = 0.29;
+
+    const options = daysOptions.map(days => {
+        let interestRate;
+        if (days === 28) interestRate = 0.288;
+        else if (days === 35) interestRate = 0.295;
+        else if (days === 42) interestRate = 0.288;
+        else if (days === 49) interestRate = 0.2903;
+
+        const totalPayment = principal * (1 + interestRate);
+        const dailyPayment = roundPayment(totalPayment / days);
+        return { dailyPayment, totalDays: days };
+    });
+
+    return options;
+}
+
+// Hàm định dạng số tiền VNĐ
+const formatVND = (num) => num.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+
+// Hàm định dạng ngày tháng
+const timezone = 'Asia/Ho_Chi_Minh';
+function formatDate(date) {
+    return date.toLocaleDateString('vi-VN', { timeZone: timezone });
+}
+
+// Hàm tính ngày đến hạn
+function calculateDueDateObject(startDate, days) {
+    const dueDate = new Date(startDate);
+    dueDate.setDate(startDate.getDate() + days - 1);
+    return dueDate;
+}
+
+// Hàm sao chép nội dung
+function copyToClipboard(elementId) {
+    const element = document.getElementById(elementId);
+    const textToCopy = element.textContent || element.innerText;
+    const lines = textToCopy.split('\n');
+    const filteredLines = lines.filter(line => !line.trim().endsWith('Copy') && line.trim() !== '');
+    const cleanedText = filteredLines.join('\n').trim();
+
+    navigator.clipboard.writeText(cleanedText).then(() => {
+        alert('Đã sao chép nội dung!');
+    }).catch(err => {
+        console.error('Lỗi khi sao chép: ', err);
+        alert('Không thể sao chép nội dung.');
+    });
+}
+
+// Hàm cập nhật tùy chọn khi nhập số tiền gốc
+function updateOptions() {
+    const principalInput = document.getElementById('principal');
+    const principalValue = principalInput.value;
+    const principal = parseSmartInput(principalValue);
+    const optionSelect = document.getElementById('option');
+    const dailyPaymentInput = document.getElementById('dailyPayment');
+    const totalDaysInput = document.getElementById('totalDays');
+    optionSelect.innerHTML = '<option value="">Chọn tùy chọn</option>';
+    dailyPaymentInput.value = '';
+    totalDaysInput.value = '';
+    calculateLoan();
+
+    if (!isNaN(principal) && principal >= 1000000 && principal <= 20000000) {
+        const loanOptions = generateLoanOptions(principal);
+        loanOptions.forEach((option, index) => {
+            const optionElement = document.createElement('option');
+            optionElement.value = index;
+            optionElement.text = `${formatVND(option.dailyPayment).replace(/\s/g, '')}/ngày - ${option.totalDays} ngày`;
+            optionSelect.appendChild(optionElement);
+        });
+    }
+}
+
+// Hàm cập nhật các trường khi chọn tùy chọn
+function updateFields() {
+    const principalValue = document.getElementById('principal').value;
+    const principal = parseSmartInput(principalValue);
+    const optionIndex = parseInt(document.getElementById('option').value);
+    const dailyPaymentInput = document.getElementById('dailyPayment');
+    const totalDaysInput = document.getElementById('totalDays');
+
+    if (!isNaN(principal) && !isNaN(optionIndex)) {
+        const loanOptions = generateLoanOptions(principal);
+        const selectedOption = loanOptions[optionIndex];
+        if (selectedOption) {
+            dailyPaymentInput.value = formatVND(selectedOption.dailyPayment);
+            totalDaysInput.value = selectedOption.totalDays;
+        }
+    } else {
+        dailyPaymentInput.value = '';
+        totalDaysInput.value = '';
+    }
+    calculateLoan();
+}
+
+// Hàm tính toán và hiển thị kết quả
+function calculateLoan() {
+    const borrowerName = document.getElementById('borrowerName').value;
+    const loanDateStr = document.getElementById('loanDate').value;
+    const principalValue = document.getElementById('principal').value;
+    const principal = parseSmartInput(principalValue);
+    const optionIndex = parseInt(document.getElementById('option').value);
+    const prepaidDays = parseInt(document.getElementById('prepaidDays').value);
+    const resultDiv = document.getElementById('result');
+
+    // Kiểm tra dữ liệu hợp lệ
+    if (!borrowerName || !loanDateStr || isNaN(principal) || principal < 1000000 || principal > 20000000 || isNaN(optionIndex) || optionIndex < 0 || isNaN(prepaidDays) || prepaidDays < 0) {
+        resultDiv.innerHTML = '';
+        return;
+    }
+
+    const loanOptions = generateLoanOptions(principal);
+    const selectedOption = loanOptions[optionIndex];
+    const dailyPayment = selectedOption.dailyPayment;
+    const totalDays = selectedOption.totalDays;
+
+    if (prepaidDays > totalDays) {
+        resultDiv.innerHTML = `<p style="color: red;">Số ngày đóng trước (${prepaidDays}) không được lớn hơn tổng số ngày góp (${totalDays}).</p>`;
+        return;
+    }
+
+    // Tính toán
+    const totalPayment = dailyPayment * totalDays;
+    const interest = totalPayment - principal;
+    const interestRate = (interest / principal) * 100;
+    const prepaidAmount = dailyPayment * prepaidDays;
+    const remainingDays = totalDays - prepaidDays;
+    const remainingAmount = dailyPayment * remainingDays;
+    const transferAmount = principal - prepaidAmount;
+
+    // Xử lý ngày
+    const loanDate = new Date(loanDateStr);
+    const loanDateFormatted = formatDate(loanDate);
+    const dueDateObject = calculateDueDateObject(loanDate, prepaidDays);
+    const dueDateFormatted = formatDate(dueDateObject);
+    const maturityDateObject = calculateDueDateObject(loanDate, totalDays);
+    const maturityDateFormatted = formatDate(maturityDateObject);
+
+    // Hiển thị kết quả
+    resultDiv.innerHTML = `
+        <h3>Người vay:</h3>
+        <div class="result-section" id="input-section">
+            <p><strong>Tên người vay:</strong> ${borrowerName}</p>
+            <p><strong>Ngày vay:</strong> ${loanDateFormatted}</p>
+            <p><strong>Tiền gốc:</strong> ${formatVND(principal)}</p>
+            <p><strong>Gói đã chọn:</strong> ${formatVND(dailyPayment).replace(/\s/g, '')}/ngày - ${totalDays} ngày</p>
+            <p><strong>Số tiền đóng trước (${prepaidDays} ngày):</strong> ${formatVND(prepaidAmount)}</p>
+            <p><strong>Số tiền cần chuyển khoản:</strong> ${formatVND(transferAmount)}</p>
+            <p><strong>Ngày đóng tiếp theo:</strong> ${dueDateFormatted}</p>
+            <p><strong>Ngày đáo hạn:</strong> ${maturityDateFormatted}</p>
+            <p><strong>Số ngày còn lại phải đóng:</strong> ${remainingDays} ngày</p>
+            <p><strong>Số tiền còn lại phải đóng:</strong> ${formatVND(remainingAmount)}</p>
+            <button class="copy-btn" onclick="copyToClipboard('input-section')">Copy</button>
+        </div>
+        <h3>Người cho vay:</h3>
+        <div class="result-section" id="output-section">
+            <p><strong>Số ngày đóng trước:</strong> ${prepaidDays} ngày</p>
+            <p><strong>Tổng tiền phải trả (Gốc + Lãi):</strong> ${formatVND(totalPayment)}</p>
+            <p><strong>Tiền lãi:</strong> ${formatVND(interest)}</p>
+            <p><strong>Lãi suất:</strong> ${interestRate.toFixed(2)}%</p>
+            <button class="copy-btn" onclick="copyToClipboard('output-section')">Copy</button>
+        </div>
+    `;
+}
+
+// Thiết lập ngày mặc định và sự kiện
+document.addEventListener('DOMContentLoaded', () => {
+    const loanDateInput = document.getElementById('loanDate');
+    const today = new Date();
+    loanDateInput.value = today.toISOString().split('T')[0];
+
+    const principalInput = document.getElementById('principal');
+
+    // Xử lý khi nhập
+    principalInput.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/[^0-9.]/g, ''); // Chỉ giữ số và dấu chấm
+        e.target.value = value; // Giữ giá trị đang nhập, không định dạng ngay
+        updateOptions();
+    });
+
+    // Định dạng và kiểm tra khi rời khỏi trường
+    principalInput.addEventListener('blur', (e) => {
+        let value = e.target.value;
+        let num = parseSmartInput(value);
+        if (!isNaN(num)) {
+            e.target.value = formatNumber(num);
+        } else {
+            e.target.value = '';
+        }
+        updateOptions();
+    });
+
+    // Các sự kiện khác
+    document.getElementById('borrowerName').addEventListener('input', calculateLoan);
+    document.getElementById('loanDate').addEventListener('input', calculateLoan);
+    document.getElementById('option').addEventListener('change', updateFields);
+    document.getElementById('prepaidDays').addEventListener('input', calculateLoan);
+});
+    </script>
+</body>
+</html>
