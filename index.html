@@ -231,7 +231,7 @@
         // Hàm tính ngày đến hạn
         function calculateDueDateObject(startDate, days) {
             const dueDate = new Date(startDate);
-            dueDate.setDate(startDate.getDate() + days);
+            dueDate.setDate(startDate.getDate() + days - 1); // Trừ 1 để bao gồm ngày vay
             return dueDate;
         }
 
